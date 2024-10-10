@@ -54,7 +54,6 @@ const useMove = (startingPosition) => {
         cancelAnimationFrame(currentMovingRef);
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [delay, position]);
 
   return [position, movingRef, direction];

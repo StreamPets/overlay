@@ -26,7 +26,6 @@ const Pet = ({ user: { username, color }}) => {
       }}>
         {username}
       </p>
-      {/* TODO: Accept a colour */}
       <TRex color={color} direction={direction} />
     </div>
   );
