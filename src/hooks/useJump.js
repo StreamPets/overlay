@@ -32,7 +32,7 @@ const useJump = (username, movingRef) => {
       }
     }
 
-    const eventSource = new EventSource("http://localhost:5000/listen");
+    const eventSource = new EventSource(`${process.env.REACT_APP_API_URL}/listen`);
     eventSource.addEventListener("JUMP", handleJump);
 
     return () => {

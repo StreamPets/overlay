@@ -5,11 +5,11 @@ const useViewers = () => {
   const [viewers, setViewers] = useState([]);
 
   const api = axios.create({
-    baseURL: 'http://localhost:5000'
+    baseURL: process.env.REACT_APP_API_URL
   });
 
   useEffect(() => {
-    const eventSource = new EventSource("http://localhost:5000/listen");
+    const eventSource = new EventSource(`${process.env.REACT_APP_API_URL}/listen`);
 
     const fetchUsers = async () => {
       const { data: viewers } = await api.get('/viewers');
