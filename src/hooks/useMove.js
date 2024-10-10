@@ -46,7 +46,15 @@ const useMove = (startingPosition) => {
       }
     }, 5000 + delay);
 
-    return () => clearInterval(interval);
+    const currentMovingRef = movingRef.current;
+
+    return () => {
+      clearInterval(interval);
+      if (currentMovingRef) {
+        cancelAnimationFrame(currentMovingRef);
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [delay, position]);
 
   return [position, movingRef, direction];

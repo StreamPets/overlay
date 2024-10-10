@@ -32,7 +32,7 @@ const useJump = (username, movingRef) => {
       }
     }
 
-    const eventSource = new EventSource('http://localhost:5000/listen');
+    const eventSource = new EventSource("http://localhost:5000/listen");
     eventSource.addEventListener("JUMP", handleJump);
 
     return () => {

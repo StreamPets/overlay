@@ -9,8 +9,8 @@ const StreamPets = () => {
       display: "flex",
       flexDirection: "column",
     }}>
-      {viewers.map(username =>
-        <Pet username={username} />
+      {viewers.map(viewer =>
+        <Pet key={viewer.username} user={viewer} />
       )}
     </div>
   );

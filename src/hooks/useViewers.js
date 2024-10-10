@@ -1,5 +1,4 @@
 import axios from "axios";
-import useEventSource from "./useEventSource";
 import { useEffect, useState } from "react";
 
 const useViewers = () => {
@@ -9,23 +8,43 @@ const useViewers = () => {
     baseURL: 'http://localhost:5000'
   });
 
-  useEventSource("http://localhost:5000/listen", "JOIN", (event) => {
-    if (!viewers.find(user => user === event.data)) {
-      setViewers(prev => [...prev, event.data])
-    }
-  });
-
-  useEventSource("http://localhost:5000/listen", "PART", (event) => {
-    setViewers(prev => prev.filter(user => user !== event.data));
-  });
-
   useEffect(() => {
+    const eventSource = new EventSource("http://localhost:5000/listen");
+
     const fetchUsers = async () => {
       const { data: viewers } = await api.get('/viewers');
       setViewers(viewers);
     }
 
     fetchUsers();
+
+    eventSource.addEventListener("JOIN", (event) => {
+      const viewer = JSON.parse(event.data);
+      setViewers(prev => {
+        if (!prev.find(user => user.username === viewer.username)) {
+          return [...prev, viewer];
+        }
+        return prev;
+      });
+    });
+
+    eventSource.addEventListener("PART", (event) => {
+      setViewers(prev => prev.filter(user => user.username !== event.data));
+    });
+
+    eventSource.addEventListener("COLOR", (event) => {
+      console.log(event.data);
+      const viewer = JSON.parse(event.data);
+      setViewers(prev => prev.map(item => {
+        if (item.username === viewer.username) {
+          return { username: viewer.username, color: viewer.color };
+        }
+        return item;
+      }));
+    });
+
+    return () => eventSource.close();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return viewers;
