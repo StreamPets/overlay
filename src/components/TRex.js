@@ -4,6 +4,7 @@ import purpleRex from 'assets/purple-rex.png';
 import orangeRex from 'assets/orange-rex.png';
 import greenRex from 'assets/green-rex.png';
 import redRex from 'assets/red-rex.png';
+import pinkRex from 'assets/pink-rex.png';
 
 import { PET_HEIGHT } from "utils";
 
@@ -14,6 +15,7 @@ const images = {
   orange: orangeRex,
   green: greenRex,
   red: redRex,
+  pink: pinkRex,
 }
 
 const TRex = ({ color, direction })  => {
@@ -24,7 +26,6 @@ const TRex = ({ color, direction })  => {
         height: PET_HEIGHT,
         width: PET_HEIGHT,
         transform: `scaleX(${direction})`,
-        color: 'red',
       }}
       alt="trex">
     </img>
