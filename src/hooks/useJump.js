@@ -1,13 +1,18 @@
-import { useEffect, useRef, useState } from "react";
+import { ListenerContext } from "contexts/listenerContext";
+import { useContext, useEffect, useRef, useState } from "react";
 import { PET_HEIGHT } from "utils";
+
+// TODO: Check disabled lines
 
 const useJump = (username, movingRef) => {
   const isJumping = useRef(false);
   const [height, setHeight] = useState(0);
 
+  const { listener } = useContext(ListenerContext);
+
   useEffect(() => {
     const handleJump = (event) => {
-      if (event.data === username && !isJumping.current) {
+      if (!isJumping.current) {
         isJumping.current = true;
         cancelAnimationFrame(movingRef.current);
         const startTime = Date.now()
@@ -32,14 +37,12 @@ const useJump = (username, movingRef) => {
       }
     }
 
-    const eventSource = new EventSource(`${process.env.REACT_APP_API_URL}/listen`);
-    eventSource.addEventListener("JUMP", handleJump);
+    listener.addEventListener(`JUMP-${username}`, handleJump);
 
-    return () => {
-      eventSource.close();
-      cancelAnimationFrame(movingRef.current);
-    }
-  }, [username, isJumping]);
+    // eslint-disable-next-line
+    return () => cancelAnimationFrame(movingRef.current);
+  // eslint-disable-next-line
+  }, [username, isJumping, listener]);
 
   return [height];
 }

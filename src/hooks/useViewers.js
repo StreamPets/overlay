@@ -1,5 +1,6 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { ListenerContext } from "contexts/listenerContext";
+import { useContext, useEffect, useState } from "react";
 
 const useViewers = () => {
   const [viewers, setViewers] = useState([]);
@@ -8,9 +9,9 @@ const useViewers = () => {
     baseURL: process.env.REACT_APP_API_URL
   });
 
-  useEffect(() => {
-    const eventSource = new EventSource(`${process.env.REACT_APP_API_URL}/listen`);
+  const { listener } = useContext(ListenerContext);
 
+  useEffect(() => {
     const fetchUsers = async () => {
       const { data: viewers } = await api.get('/viewers');
       setViewers(viewers);
@@ -18,36 +19,24 @@ const useViewers = () => {
 
     fetchUsers();
 
-    eventSource.addEventListener("JOIN", (event) => {
-      const viewer = JSON.parse(event.data);
-      setViewers(prev => {
-        if (!prev.find(user => user.username === viewer.username)) {
-          return [...prev, viewer];
+    listener.addEventListener("JOIN", (event) => {
+      const viewerData = JSON.parse(event.data);
+      setViewers(viewers => {
+        if (!viewers.find(viewer => viewer === viewerData.username)) {
+          return [...viewers, viewerData];
         }
-        return prev;
+        return viewers;
       });
     });
 
-    eventSource.addEventListener("PART", (event) => {
-      setViewers(prev => prev.filter(user => user.username !== event.data));
+    listener.addEventListener("PART", (event) => {
+      setViewers(viewers => viewers.filter(viewer => viewer.username !== event.data));
     });
 
-    eventSource.addEventListener("COLOR", (event) => {
-      console.log(event.data);
-      const viewer = JSON.parse(event.data);
-      setViewers(prev => prev.map(item => {
-        if (item.username === viewer.username) {
-          return { username: viewer.username, color: viewer.color };
-        }
-        return item;
-      }));
-    });
-
-    return () => eventSource.close();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return viewers;
+  return { viewers };
 }
 
 export default useViewers;

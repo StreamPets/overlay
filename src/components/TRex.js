@@ -7,6 +7,7 @@ import redRex from 'assets/red-rex.png';
 import pinkRex from 'assets/pink-rex.png';
 
 import { PET_HEIGHT } from "utils";
+import useColor from 'hooks/useColor';
 
 const images = {
   blue: blueRex,
@@ -18,7 +19,9 @@ const images = {
   pink: pinkRex,
 }
 
-const TRex = ({ color, direction })  => {
+const TRex = ({ username, initialColor, direction })  => {
+  const { color } = useColor(username, initialColor);
+
   return (
     <img
       src={images[color]}
