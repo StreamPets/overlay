@@ -19,6 +19,7 @@ const useViewers = () => {
 
     fetchUsers();
 
+    // TODO: Investigate double joining
     listener.addEventListener("JOIN", (event) => {
       const viewerData = JSON.parse(event.data);
       setViewers(viewers => {
