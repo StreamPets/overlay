@@ -1,18 +1,19 @@
 import { ListenerContext } from "contexts/listenerContext";
 import { useContext, useEffect, useState } from "react";
 
-const useColor = (username, initialColor) => {
+const useColor = (userID, initialColor) => {
   const [color, setColor] = useState(initialColor);
   const { listener } = useContext(ListenerContext);
 
   useEffect(() => {
     const changeColor = (event) => {
-      const viewer = JSON.parse(event.data);
-      setColor(viewer.color);
+      const color = event.data;
+      console.log(color);
+      setColor(color);
     }
 
-    listener.addEventListener(`COLOR-${username}`, changeColor);
-  }, [username, listener]);
+    listener.addEventListener(`COLOR-${userID}`, changeColor);
+  }, [userID, listener]);
 
   return { color };
 }

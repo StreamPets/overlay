@@ -4,7 +4,7 @@ import { PET_HEIGHT } from "utils";
 
 // TODO: Check disabled lines
 
-const useJump = (username, movingRef) => {
+const useJump = (userID, movingRef) => {
   const isJumping = useRef(false);
   const [height, setHeight] = useState(0);
 
@@ -37,12 +37,12 @@ const useJump = (username, movingRef) => {
       }
     }
 
-    listener.addEventListener(`JUMP-${username}`, handleJump);
+    listener.addEventListener(`JUMP-${userID}`, handleJump);
 
     // eslint-disable-next-line
     return () => cancelAnimationFrame(movingRef.current);
   // eslint-disable-next-line
-  }, [username, isJumping, listener]);
+  }, [userID, isJumping, listener]);
 
   return [height];
 }

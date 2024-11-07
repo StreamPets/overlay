@@ -10,7 +10,7 @@ const StreamPets = () => {
       flexDirection: "column",
     }}>
       {viewers.map(viewer =>
-        <Pet key={viewer.username} username={viewer.username} color={viewer.color} />
+        <Pet key={viewer.username} viewer={viewer} />
       )}
     </div>
   );

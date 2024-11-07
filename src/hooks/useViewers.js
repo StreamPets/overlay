@@ -22,7 +22,7 @@ const useViewers = () => {
     listener.addEventListener("JOIN", (event) => {
       const viewerData = JSON.parse(event.data);
       setViewers(viewers => {
-        if (!viewers.find(viewer => viewer.username === viewerData.username)) {
+        if (!viewers.find(viewer => viewer.userID === viewerData.userID)) {
           return [...viewers, viewerData];
         }
         return viewers;
@@ -30,7 +30,7 @@ const useViewers = () => {
     });
 
     listener.addEventListener("PART", (event) => {
-      setViewers(viewers => viewers.filter(viewer => viewer.username !== event.data));
+      setViewers(viewers => viewers.filter(viewer => viewer.userID !== event.data));
     });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

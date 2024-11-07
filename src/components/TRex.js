@@ -19,8 +19,8 @@ const images = {
   pink: pinkRex,
 }
 
-const TRex = ({ username, initialColor, direction })  => {
-  const { color } = useColor(username, initialColor);
+const TRex = ({ userID, initialColor, direction })  => {
+  const { color } = useColor(userID, initialColor);
 
   return (
     <img
