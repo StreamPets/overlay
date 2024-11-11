@@ -7,8 +7,7 @@ const useColor = (userID, initialColor) => {
 
   useEffect(() => {
     const changeColor = (event) => {
-      const color = event.data;
-      console.log(color);
+      const color = JSON.parse(event.data);
       setColor(color);
     }
 
