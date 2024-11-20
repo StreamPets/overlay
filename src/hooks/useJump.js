@@ -1,14 +1,9 @@
-import { ListenerContext } from "contexts/listenerContext";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { PET_HEIGHT } from "utils";
 
-// TODO: Check disabled lines
-
-const useJump = (userID, movingRef) => {
+const useJump = (userID, movingRef, listener) => {
   const isJumping = useRef(false);
   const [height, setHeight] = useState(0);
-
-  const { listener } = useContext(ListenerContext);
 
   useEffect(() => {
     const handleJump = (event) => {
@@ -37,6 +32,7 @@ const useJump = (userID, movingRef) => {
       }
     }
 
+    console.log("Added JUMP event listener for: ", userID);
     listener.addEventListener(`JUMP-${userID}`, handleJump);
 
     // eslint-disable-next-line

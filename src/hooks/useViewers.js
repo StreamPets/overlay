@@ -1,23 +1,27 @@
-import axios from "axios";
-import { ListenerContext } from "contexts/listenerContext";
-import { useContext, useEffect, useState } from "react";
+import { fetchUsers } from "api";
+import { useEffect, useState } from "react";
 
-const useViewers = () => {
+const useViewers = (overlayID, channelID, listener) => {
   const [viewers, setViewers] = useState([]);
 
-  const api = axios.create({
-    baseURL: process.env.REACT_APP_API_URL
-  });
-
-  const { listener } = useContext(ListenerContext);
-
   useEffect(() => {
-    const fetchUsers = async () => {
-      const { data: viewers } = await api.get('/viewers');
+    if (!overlayID || !channelID) {
+      return;
+    }
+    
+    const getUsers = async () => {
+      const viewers = await fetchUsers(overlayID, channelID);
+      console.log(viewers);
       setViewers(viewers);
     }
 
-    fetchUsers();
+    getUsers();
+  }, [overlayID, channelID]);
+
+  useEffect(() => {
+    if (!listener) {
+      return;
+    }
 
     listener.addEventListener("JOIN", (event) => {
       const viewerData = JSON.parse(event.data);
@@ -32,9 +36,7 @@ const useViewers = () => {
     listener.addEventListener("PART", (event) => {
       setViewers(viewers => viewers.filter(viewer => viewer.userID !== event.data));
     });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [listener])
 
   return { viewers };
 }

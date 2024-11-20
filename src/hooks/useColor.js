@@ -1,9 +1,7 @@
-import { ListenerContext } from "contexts/listenerContext";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-const useColor = (userID, initialColor) => {
+const useColor = (userID, initialColor, listener) => {
   const [color, setColor] = useState(initialColor);
-  const { listener } = useContext(ListenerContext);
 
   useEffect(() => {
     const changeColor = (event) => {
