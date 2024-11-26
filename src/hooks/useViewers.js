@@ -11,7 +11,6 @@ const useViewers = (overlayID, channelID, listener) => {
     
     const getUsers = async () => {
       const viewers = await fetchUsers(overlayID, channelID);
-      console.log(viewers);
       setViewers(viewers);
     }
 
