@@ -3,8 +3,6 @@ import useViewers from "hooks/useViewers";
 import { useEffect, useState } from "react";
 
 const StreamPets = () => {
-  const [overlayID, setOverlayID] = useState(null);
-  const [channelID, setChannelID] = useState(null);
   const [listener, setListener] = useState(null);
 
   useEffect(() => {
@@ -12,16 +10,13 @@ const StreamPets = () => {
     const urlParams = new URLSearchParams(queryString);
 
     const overlayID = urlParams.get('overlayID');
-    setOverlayID(overlayID);
-
     const channelID = urlParams.get('channelID');
-    setChannelID(channelID);
 
-    const listener = new EventSource(`${process.env.REACT_APP_API_URL}/listen?overlayID=${overlayID}&channelID=${channelID}`);
+    const listener = new EventSource(`${process.env.REACT_APP_API_URL}/overlay/listen?overlayID=${overlayID}&channelID=${channelID}`);
     setListener(listener);
   }, [])
 
-  const { viewers } = useViewers(overlayID, channelID, listener);
+  const { viewers } = useViewers(listener);
 
   return (
     <div style={{

@@ -1,21 +1,7 @@
-import { fetchUsers } from "api";
 import { useEffect, useState } from "react";
 
-const useViewers = (overlayID, channelID, listener) => {
+const useViewers = (listener) => {
   const [viewers, setViewers] = useState([]);
-
-  useEffect(() => {
-    if (!overlayID || !channelID) {
-      return;
-    }
-    
-    const getUsers = async () => {
-      const viewers = await fetchUsers(overlayID, channelID);
-      setViewers(viewers);
-    }
-
-    getUsers();
-  }, [overlayID, channelID]);
 
   useEffect(() => {
     if (!listener) {
