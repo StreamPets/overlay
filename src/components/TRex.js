@@ -6,7 +6,7 @@ const TRex = ({ userID, initialColor, direction, listener })  => {
 
   return (
     <img
-      src={color.img}
+      src={color}
       style={{
         height: PET_HEIGHT,
         width: PET_HEIGHT,
