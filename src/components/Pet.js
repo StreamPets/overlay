@@ -3,11 +3,11 @@ import useJump from "hooks/useJump";
 import useMove from "hooks/useMove";
 import TRex from './TRex';
 
-const Pet = ({ viewer: { userID, username, color }, listener}) => {
+const Pet = ({ viewer: { userId, username, color }, listener}) => {
   const startingPosition = getRandomInt(SCREEN_WIDTH - PET_HEIGHT);
 
   const [position, movingRef, direction] = useMove(startingPosition);
-  const [height] = useJump(userID, movingRef, listener);
+  const [height] = useJump(userId, movingRef, listener);
 
   return (
     <div style={{
@@ -26,7 +26,7 @@ const Pet = ({ viewer: { userID, username, color }, listener}) => {
       }}>
         {username}
       </p>
-      <TRex userID={userID} initialColor={color} direction={direction} listener={listener} />
+      <TRex userId={userId} initialColor={color} direction={direction} listener={listener} />
     </div>
   );
 }

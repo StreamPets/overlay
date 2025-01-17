@@ -9,10 +9,11 @@ const StreamPets = () => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
 
-    const overlayID = urlParams.get('overlayID');
-    const channelID = urlParams.get('channelID');
+    const overlayId = urlParams.get('overlayId');
+    const channelId = urlParams.get('channelId');
 
-    const listener = new EventSource(`${process.env.REACT_APP_API_URL}/overlay/listen?overlayID=${overlayID}&channelID=${channelID}`);
+    const listener = new EventSource(`${process.env.REACT_APP_API_URL}/overlay/listen?overlayId=${overlayId}&channelId=${channelId}`);
+
     setListener(listener);
   }, [])
 

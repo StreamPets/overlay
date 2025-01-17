@@ -11,7 +11,7 @@ const useViewers = (listener) => {
     listener.addEventListener("JOIN", (event) => {
       const viewerData = JSON.parse(event.data);
       setViewers(viewers => {
-        if (!viewers.find(viewer => viewer.userID === viewerData.userID)) {
+        if (!viewers.find(viewer => viewer.userId === viewerData.userId)) {
           return [...viewers, viewerData];
         }
         return viewers;
@@ -19,7 +19,7 @@ const useViewers = (listener) => {
     });
 
     listener.addEventListener("PART", (event) => {
-      setViewers(viewers => viewers.filter(viewer => viewer.userID !== event.data));
+      setViewers(viewers => viewers.filter(viewer => viewer.userId !== event.data));
     });
   }, [listener])
 

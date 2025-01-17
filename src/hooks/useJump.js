@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { PET_HEIGHT } from "utils";
 
-const useJump = (userID, movingRef, listener) => {
+const useJump = (userId, movingRef, listener) => {
   const isJumping = useRef(false);
   const [height, setHeight] = useState(0);
 
@@ -32,12 +32,12 @@ const useJump = (userID, movingRef, listener) => {
       }
     }
 
-    listener.addEventListener(`JUMP-${userID}`, handleJump);
+    listener.addEventListener(`JUMP-${userId}`, handleJump);
 
     // eslint-disable-next-line
     return () => cancelAnimationFrame(movingRef.current);
   // eslint-disable-next-line
-  }, [userID, isJumping, listener]);
+  }, [userId, isJumping, listener]);
 
   return [height];
 }

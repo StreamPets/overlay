@@ -1,8 +1,8 @@
 import { PET_HEIGHT } from "utils";
 import useColor from 'hooks/useColor';
 
-const TRex = ({ userID, initialColor, direction, listener })  => {
-  const { color } = useColor(userID, initialColor, listener);
+const TRex = ({ userId, initialColor, direction, listener })  => {
+  const { color } = useColor(userId, initialColor, listener);
 
   return (
     <img

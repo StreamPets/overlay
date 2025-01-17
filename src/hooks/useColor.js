@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const useColor = (userID, initialColor, listener) => {
+const useColor = (userId, initialColor, listener) => {
   const [color, setColor] = useState(initialColor);
 
   useEffect(() => {
@@ -9,8 +9,8 @@ const useColor = (userID, initialColor, listener) => {
       setColor(color);
     }
 
-    listener.addEventListener(`COLOR-${userID}`, changeColor);
-  }, [userID, listener]);
+    listener.addEventListener(`COLOR-${userId}`, changeColor);
+  }, [userId, listener]);
 
   return { color };
 }
