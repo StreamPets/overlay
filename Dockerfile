@@ -1,12 +1,13 @@
-FROM node:18 as build
+FROM node:18 AS build
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install
 COPY . .
 RUN npm run build
 
-FROM nginx:stable-alpine
-COPY --from=build /app/build /usr/share/nginx/html
-EXPOSE 80
+FROM python:alpine
+WORKDIR /app/build
+COPY --from=build /app/build .
+EXPOSE 8000
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["python", "-m", "http.server", "8000"]
